@@ -5,9 +5,9 @@ from tqdm import tqdm
 from PIL import Image
 
 class Milabol:
-    def __init__(self, blip_path, wd_path, device="cuda"):
-        self.lc = LongCaptioner(blip_path, device)
-        self.st = ShortTagger(wd_path)
+    def __init__(self, blip_path, wd_path, device="cuda", *args, **kwargs):
+        self.lc = LongCaptioner(blip_path, device, *args, **kwargs)
+        self.st = ShortTagger(wd_path, *args, **kwargs)
 
     def predict(self, image, *args, **kwargs):
         caption = self.lc.predict(image, *args, **kwargs)

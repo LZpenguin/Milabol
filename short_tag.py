@@ -25,7 +25,7 @@ def mcut_threshold(probs):
     return thresh
 
 class ShortTagger:
-    def __init__(self, model_name_or_path):
+    def __init__(self, model_name_or_path, *args, **kwargs):
         self.model_target_size = None
         self.last_loaded_repo = None
 

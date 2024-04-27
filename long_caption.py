@@ -1,11 +1,17 @@
 from PIL import Image
-from transformers import BlipProcessor, BlipForConditionalGeneration
+from transformers import BlipProcessor, BlipForConditionalGeneration, Blip2Processor, Blip2ForConditionalGeneration
 
 
 class LongCaptioner:
-    def __init__(self, model_name_or_path, device="cuda"):
-        self.processor = BlipProcessor.from_pretrained(model_name_or_path)
-        self.model = BlipForConditionalGeneration.from_pretrained(model_name_or_path).to(device)
+    def __init__(self, model_name_or_path, device="cuda", version=1, *args, **kwargs):
+        if version == 1:
+            self.processor = BlipProcessor.from_pretrained(model_name_or_path)
+            self.model = BlipForConditionalGeneration.from_pretrained(model_name_or_path).to(device)
+        elif version == 2:
+            self.processor = Blip2Processor.from_pretrained(model_name_or_path)
+            self.model = Blip2ForConditionalGeneration.from_pretrained(model_name_or_path).to(device)
+        else:
+            raise ValueError(f'Invalid Blip version: {version}')
 
     def predict(self, image: Image, max_length=100, max_sentence=2, *args, **kwargs):
         image = image.convert('RGB')
